@@ -1,6 +1,6 @@
 # Slideshow
 
-This is a slideshow program that will create a slideshow of ten up to selected images for the user. 
+This is a slideshow program that will create a slideshow of up to ten selected images for the user. 
 
 My swing projects are still looking horrendous, but I'm liking how this one turned out.
 
