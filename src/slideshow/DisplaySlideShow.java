@@ -72,6 +72,8 @@ public class DisplaySlideShow {
 	private class TimerListener implements ActionListener {
 	    @Override
 	    public void actionPerformed(ActionEvent ae) {
+	    	currentSlide++;
+	   
 	    	// If the currentSlide value is greater than or equal to the length of the images array,
 	    	// that means all the images have been display and we are ready to close the slideshow
 	    	if(currentSlide >= images.length) {
@@ -82,7 +84,6 @@ public class DisplaySlideShow {
 	    	}
 	    	// Otherwise, we increment the currentSlide value and set the icon for the JLabel
 	    	else {
-	    		currentSlide++;
 		    	icon.setIcon(images[currentSlide]);
 	    	}
 	    }
