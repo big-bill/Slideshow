@@ -291,7 +291,7 @@ public class Slideshow extends JFrame {
 	private void playSlides() {
 		ImageIcon[] img = new ImageIcon[listModel.size()];
 		double delay = 0.0;
-		// If the array empty, we don't bother playing the slideshow
+		// If the array is empty, we don't bother playing the slideshow
 		if(img.length == 0) {
 			JOptionPane.showMessageDialog(null, "No images have been selected for the slideshow.");
 			return;
