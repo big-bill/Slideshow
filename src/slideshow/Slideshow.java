@@ -5,8 +5,6 @@ package slideshow;
  * Write an application that displays a slideshow of images, one after the other, with a time delay between each image.
  * The user should be able to select up to 10 images for the slide show and specify the time delay in seconds.
  * 
- * 
- * 
  * Written by Billy Matthews, November 2016.
  */
 
@@ -34,8 +32,9 @@ public class Slideshow extends JFrame {
 	private JPanel selectedImagePreview;		// Panel that displays the currently selected image
 	private JLabel selectedImage;				// Used to display the image
 
-	private JPanel bottomPanel;					// Holds the play slideshow, help, and exit buttons
+	private JPanel bottomPanel;					// Holds the play, help, and exit buttons
 
+	//-----------------------------------------------------------------------------------------------------------
 
 	public Slideshow() {
 		setTitle("Slideshow application");
@@ -69,7 +68,6 @@ public class Slideshow extends JFrame {
 
 		JButton moveUp = new JButton("<html>^<br>^</html>");
 		moveUp.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(listModel.isEmpty())
@@ -86,7 +84,6 @@ public class Slideshow extends JFrame {
 				}
 			}
 		});
-
 
 		JButton moveDown = new JButton("<html>v<br>v</html>");
 		moveDown.addActionListener(new ActionListener() {
@@ -105,7 +102,6 @@ public class Slideshow extends JFrame {
 
 				}
 			}
-
 		});
 
 		moveImagesPanel.add(moveUp);
@@ -126,7 +122,6 @@ public class Slideshow extends JFrame {
 		photosList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		photosList.setVisibleRowCount(10);
 		photosList.setFixedCellWidth(width/2);
-
 
 		MouseListener mouseListener = new MouseAdapter() {
 			public void mouseClicked(MouseEvent mouseEvent) {
@@ -244,16 +239,11 @@ public class Slideshow extends JFrame {
 		// playSlideshow will play a slideshow of the images populated in the photosList JList
 		JButton playSlideshow = new JButton("Play Slideshow");
 		playSlideshow.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
 					// playSlides will create a temporary instance of the DisplaySlideShow class
 					// which will create a new JFrame and create a slideshow of images
-					playSlides();
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
+					playSlides();				
 			}
 		});
 
@@ -279,7 +269,6 @@ public class Slideshow extends JFrame {
 				if(reply == JOptionPane.YES_OPTION) {
 					System.exit(0);
 					dispose();
-					setVisible(false);
 				}
 			}
 		});
@@ -299,33 +288,40 @@ public class Slideshow extends JFrame {
 	//-----------------------------------------------------------------------------------------------------------
 
 	// This method creates an instance of the DisplaySlideShow class, and sends an array of ImageIcons to it
-	private void playSlides() throws InterruptedException {
+	private void playSlides() {
 		ImageIcon[] img = new ImageIcon[listModel.size()];
+		double delay = 0.0;
 		// If the array empty, we don't bother playing the slideshow
 		if(img.length == 0) {
 			JOptionPane.showMessageDialog(null, "No images have been selected for the slideshow.");
 			return;
 		}
 
+		while(true) {
+			// Get the slide delay
+			String input = JOptionPane.showInputDialog(null, "Enter the delay, in seconds, between each slide.");
+			
+			// If the user clicks cancel we return to the program and not play the slideshow
+			if(input == null) return; 
+			
+			try {
+				delay = Double.parseDouble(input);
+				break;
+			} catch(NumberFormatException | NullPointerException e) {
+				JOptionPane.showMessageDialog(null, "Invalid value entered, please try again.");
+			}
+		}
+		
 		// We populate the ImageIcon array with values the found in listModel
 		for(int i = 0; i < img.length; ++i) {
 			ImageIcon iconPath = new ImageIcon(new File(listModel.getElementAt(i)).getPath());
 			img[i] = new ImageIcon(iconPath.getImage().getScaledInstance(800, 600, Image.SCALE_DEFAULT));
 		}
+		
+		// Create a DisplaySlideShow object and pass the array of ImageIcons and time delay
+		new DisplaySlideShow(img, delay);
 
-		while(true) {
-			// Get the slide delay
-			String input = JOptionPane.showInputDialog(null, "Enter the delay, in seconds, between each slide.");
-			try {
-				Double delay = Double.parseDouble(input);
-				// If the parsing worked, we send the array of ImageIcons and slide delay to the object
-				new DisplaySlideShow(img, delay);
-				break;
-			} catch(NumberFormatException format) {
-				JOptionPane.showMessageDialog(null, "Invalid value entered, please try again.");
-			} catch(NullPointerException emptyStr) {
-				JOptionPane.showMessageDialog(null, "Please enter a value for the time.");
-			}
-		}
 	}	
+	
+	
 }
