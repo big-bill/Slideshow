@@ -1,10 +1,11 @@
 package slideshow;
 
 /*
- * This class creates a JFrame and steps through an array of ImageIcon, which will be display at intervals specified by the user.
+ * This class creates a JFrame and steps through an array of ImageIcons, which will be display at intervals specified by the user.
  * 
  * Written by Billy Matthews, November 2016.
  */
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -17,10 +18,13 @@ import javax.swing.*;
 
 
 public class DisplaySlideShow {
-	private int currentSlide;
-	private ImageIcon[] images;
 	private JFrame slideShowFrame;
 	private JLabel icon;
+	private ImageIcon[] images;
+	private int currentSlide;
+
+
+	//-----------------------------------------------------------------------------------------------------------
 
 	public DisplaySlideShow(ImageIcon[] images, double delay) {
 		currentSlide = 0;
@@ -29,7 +33,7 @@ public class DisplaySlideShow {
 		Timer timer = new Timer((int)(delay*1000), new TimerListener());
 		
 		slideShowFrame = new JFrame();
-		slideShowFrame.setTitle("Slideshow application");
+		slideShowFrame.setTitle("Slideshow");
 		slideShowFrame.setLayout(new BorderLayout());
 		slideShowFrame.setPreferredSize(new Dimension(800, 600));
 		slideShowFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -57,14 +61,13 @@ public class DisplaySlideShow {
 	    			icon.setIcon(images[currentSlide]);
 	    	}
 		};
-		
+
 		icon.addMouseListener(mouseListener);
 		
 		slideShowFrame.add(icon, BorderLayout.CENTER);
 		slideShowFrame.pack();
 		slideShowFrame.setVisible(true);
 		timer.start();
-		
 	}
 		
 	//-----------------------------------------------------------------------------------------------------------
@@ -83,9 +86,7 @@ public class DisplaySlideShow {
 	    		slideShowFrame.dispose();
 	    	}
 	    	// Otherwise, we increment the currentSlide value and set the icon for the JLabel
-	    	else {
-		    	icon.setIcon(images[currentSlide]);
-	    	}
+	    	else icon.setIcon(images[currentSlide]);
 	    }
 	}	
 }
