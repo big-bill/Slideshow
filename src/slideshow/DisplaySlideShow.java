@@ -23,7 +23,6 @@ public class DisplaySlideShow {
 	private ImageIcon[] images;
 	private int currentSlide;
 
-
 	//-----------------------------------------------------------------------------------------------------------
 
 	public DisplaySlideShow(ImageIcon[] images, double delay) {
@@ -56,9 +55,8 @@ public class DisplaySlideShow {
 	    			JOptionPane.showMessageDialog(null, "The slideshow has concluded.");
 		    		slideShowFrame.dispatchEvent(new WindowEvent(slideShowFrame, JFrame.DISPOSE_ON_CLOSE));
 		    		slideShowFrame.dispose();
-	    		}	
-	    		else
-	    			icon.setIcon(images[currentSlide]);
+	    		}
+	    		else icon.setIcon(images[currentSlide]);
 	    	}
 		};
 
